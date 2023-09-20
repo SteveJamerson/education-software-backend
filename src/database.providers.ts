@@ -4,6 +4,7 @@ import { CreateStudentsTable1695178505238 } from './migrations/1695178505238-Cre
 import { CreateSchoolsStudentsTable1695178700211 } from './migrations/1695178700211-CreateSchoolsStudentsTable';
 import { AddCpfAndCnpjTable1695218323170 } from './migrations/1695218323170-AddCpfAndCnpjTable';
 import { CreateTasksTable1695231248369 } from './migrations/1695231248369-CreateTasksTable';
+import { CreateChallengesTable1695236943170 } from './migrations/1695236943170-CreateChallengesTable';
 
 const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
@@ -36,5 +37,6 @@ export const dataSource = new DataSource({
         CreateSchoolsStudentsTable1695178700211,
         AddCpfAndCnpjTable1695218323170,
         CreateTasksTable1695231248369,
+        CreateChallengesTable1695236943170,
     ],
 });

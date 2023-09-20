@@ -1,3 +1,4 @@
+import { Challenge } from '@/challenges/entities/challenge.entity';
 import { School } from '@/schools/entities/school.entity';
 import { Task } from '@/tasks/entities/task.entity';
 import { removeEmptyData } from '@/utils/functions/remove-empty';
@@ -32,6 +33,9 @@ export class Student {
 
     @OneToOne(() => Task, (task) => task.student)
     task: Task;
+
+    @OneToOne(() => Challenge, (challenge) => challenge.student)
+    challenge: Challenge;
 
     @CreateDateColumn({ type: 'timestamp' })
     created_at: Date;

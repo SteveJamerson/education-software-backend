@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+.docker/dbdata
 
 # Logs
 logs
@@ -11,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 lerna-debug.log*
+package-lock.json
 
 # OS
 .DS_Store

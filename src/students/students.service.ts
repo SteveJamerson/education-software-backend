@@ -1,3 +1,4 @@
+import { Challenge } from '@/challenges/entities/challenge.entity';
 import { School } from '@/schools/entities/school.entity';
 import { Task } from '@/tasks/entities/task.entity';
 import { validateCPF } from '@/utils/functions/validations';
@@ -16,18 +17,20 @@ export class StudentsService {
         private schoolsRepository: Repository<School>,
         @Inject('TASKS_REPOSITORY')
         private tasksRepository: Repository<Task>,
+        @Inject('CHALLENGE_REPOSITORY')
+        private challengesRepository: Repository<Challenge>,
     ) {}
 
     async findAll() {
         return this.studentsRepository.find({
-            relations: ['schools', 'task'],
+            relations: ['schools', 'task', 'challenge'],
         });
     }
 
     async findOne(id: string) {
         const student = await this.studentsRepository.findOne({
             where: { id },
-            relations: ['schools'],
+            relations: ['schools', 'task', 'challenge'],
         });
 
         if (!student) throw new NotFoundException(`Student ID ${id} not found`);

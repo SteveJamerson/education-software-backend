@@ -73,6 +73,7 @@ export class TasksService {
     private async preloadStudentById(id: string) {
         const student = await this.studentsRepository.findOne({
             where: { id },
+            relations: ['task', 'challenge'],
         });
 
         if (student) {

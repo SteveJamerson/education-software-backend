@@ -1,10 +1,13 @@
 import { School } from '@/schools/entities/school.entity';
+import { Task } from '@/tasks/entities/task.entity';
+import { removeEmptyData } from '@/utils/functions/remove-empty';
 import {
     BeforeInsert,
     Column,
     CreateDateColumn,
     Entity,
     ManyToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,6 +30,9 @@ export class Student {
     @ManyToMany(() => School, (school) => school.students)
     schools: School[];
 
+    @OneToOne(() => Task, (task) => task.student)
+    task: Task;
+
     @CreateDateColumn({ type: 'timestamp' })
     created_at: Date;
 
@@ -34,5 +40,10 @@ export class Student {
     generatedId() {
         if (this.id) return;
         this.id = uuid();
+    }
+
+    toJSON() {
+        removeEmptyData(this);
+        return this;
     }
 }

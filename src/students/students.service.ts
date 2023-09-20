@@ -1,4 +1,5 @@
 import { School } from '@/schools/entities/school.entity';
+import { Task } from '@/tasks/entities/task.entity';
 import { validateCPF } from '@/utils/functions/validations';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
@@ -13,11 +14,13 @@ export class StudentsService {
         private studentsRepository: Repository<Student>,
         @Inject('SCHOOLS_REPOSITORY')
         private schoolsRepository: Repository<School>,
+        @Inject('TASKS_REPOSITORY')
+        private tasksRepository: Repository<Task>,
     ) {}
 
     async findAll() {
         return this.studentsRepository.find({
-            relations: ['schools'],
+            relations: ['schools', 'task'],
         });
     }
 

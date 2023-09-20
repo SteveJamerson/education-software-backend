@@ -1,3 +1,4 @@
+import { Task } from '@/tasks/entities/task.entity';
 import { IsString } from 'class-validator';
 
 export class StudentDTO {
@@ -9,4 +10,6 @@ export class StudentDTO {
 
     @IsString({ each: true })
     readonly schools: string[];
+
+    readonly task: Task;
 }

@@ -79,7 +79,7 @@ export class StudentsService {
         if (school) {
             return school;
         } else {
-            throw new NotFoundException(`School ${name} not found`);
+            throw new NotFoundException(`School ID ${id} not found`);
         }
     }
 }

@@ -1,34 +1,25 @@
-import { Student } from '@/students/entities/student.entity';
+import { School } from '@/schools/entities/school.entity';
 import {
     BeforeInsert,
     Column,
     CreateDateColumn,
     Entity,
-    JoinTable,
     ManyToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { v4 as uuid } from 'uuid';
 
-@Entity('schools')
-export class School {
+@Entity('students')
+export class Student {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({
-        unique: true,
-    })
+    @Column()
     name: string;
 
-    @Column()
-    categorie: string;
-
-    @JoinTable({ name: 'schools_students' })
-    @ManyToMany(() => Student, (student) => student.schools, {
-        cascade: true,
-    })
-    students: Student[];
+    @ManyToMany(() => School, (school) => school.students)
+    schools: School[];
 
     @CreateDateColumn({ type: 'timestamp' })
     created_at: Date;

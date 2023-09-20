@@ -1,5 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { CreateSchoolsTable1695176535556 } from './migrations/1695176535556-CreateSchoolsTable';
+import { CreateStudentsTable1695178505238 } from './migrations/1695178505238-CreateStudentsTable';
+import { CreateSchoolsStudentsTable1695178700211 } from './migrations/1695178700211-CreateSchoolsStudentsTable';
 
 const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
@@ -26,5 +28,9 @@ export const databaseProviders = [
 
 export const dataSource = new DataSource({
     ...dataSourceOptions,
-    migrations: [CreateSchoolsTable1695176535556],
+    migrations: [
+        CreateSchoolsTable1695176535556,
+        CreateStudentsTable1695178505238,
+        CreateSchoolsStudentsTable1695178700211,
+    ],
 });

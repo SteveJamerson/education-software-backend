@@ -5,5 +5,8 @@ export class StudentDTO {
     readonly name: string;
 
     @IsString()
+    readonly cpf: string;
+
+    @IsString({ each: true })
     readonly schools: string[];
 }

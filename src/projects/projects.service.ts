@@ -1,73 +1,73 @@
 import { Student } from '@/students/entities/student.entity';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { TaskCreateDTO } from './dto/taskCreate.dto';
-import { TaskUpdateDTO } from './dto/taskUpdate.dto';
-import { Task } from './entities/task.entity';
+import { ProjectCreateDTO } from './dto/projectCreate.dto';
+import { ProjectUpdateDTO } from './dto/projectUpdate.dto';
+import { Project } from './entities/project.entity';
 
 @Injectable()
-export class TasksService {
+export class ProjectsService {
     constructor(
-        @Inject('TASKS_REPOSITORY')
-        private tasksRepository: Repository<Task>,
+        @Inject('PROJECTS_REPOSITORY')
+        private projectsRepository: Repository<Project>,
         @Inject('STUDENTS_REPOSITORY')
         private studentsRepository: Repository<Student>,
     ) {}
 
     async findAll() {
-        return this.tasksRepository.find({
+        return this.projectsRepository.find({
             relations: ['student'],
         });
     }
 
     async findOne(id: string) {
-        const task = await this.tasksRepository.findOne({
+        const project = await this.projectsRepository.findOne({
             where: { id },
             relations: ['student'],
         });
 
-        if (!task) {
-            throw new NotFoundException(`Task ID ${id} not found`);
+        if (!project) {
+            throw new NotFoundException(`Project ID ${id} not found`);
         }
 
-        return task;
+        return project;
     }
 
-    async create({ studentId, ...data }: TaskCreateDTO) {
+    async create({ studentId, ...data }: ProjectCreateDTO) {
         const student = await this.preloadStudentById(studentId);
 
-        const task = this.tasksRepository.create({
+        const project = this.projectsRepository.create({
             ...data,
             student,
         });
 
-        return this.tasksRepository.save(task);
+        return this.projectsRepository.save(project);
     }
 
-    async update(id: string, { studentId, ...data }: TaskUpdateDTO) {
+    async update(id: string, { studentId, ...data }: ProjectUpdateDTO) {
         const student = await this.preloadStudentById(studentId);
 
-        const task = await this.tasksRepository.preload({
+        const project = await this.projectsRepository.preload({
             id,
             ...data,
             student,
         });
 
-        if (!task) throw new NotFoundException(`Task ID ${id} not found`);
+        if (!project) throw new NotFoundException(`Project ID ${id} not found`);
 
-        return this.tasksRepository.save(task);
+        return this.projectsRepository.save(project);
     }
 
     async remove(id: string) {
-        const task = await this.tasksRepository.findOne({
+        const project = await this.projectsRepository.findOne({
             where: { id },
         });
 
-        if (!task) {
-            throw new NotFoundException(`Task ID ${id} not found`);
+        if (!project) {
+            throw new NotFoundException(`Project ID ${id} not found`);
         }
 
-        return this.tasksRepository.remove(task);
+        return this.projectsRepository.remove(project);
     }
 
     private async preloadStudentById(id: string) {

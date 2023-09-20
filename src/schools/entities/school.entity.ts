@@ -1,8 +1,11 @@
+import { Student } from '@/students/entities/student.entity';
 import {
     BeforeInsert,
     Column,
     CreateDateColumn,
     Entity,
+    JoinTable,
+    ManyToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,6 +23,12 @@ export class School {
 
     @Column()
     categorie: string;
+
+    @JoinTable({ name: 'schools_students' })
+    @ManyToMany(() => Student, (student) => student.schools, {
+        cascade: true,
+    })
+    students: Student[];
 
     @CreateDateColumn({ type: 'timestamp' })
     created_at: Date;

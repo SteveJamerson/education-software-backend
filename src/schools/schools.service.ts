@@ -12,12 +12,15 @@ export class SchoolsService {
     ) {}
 
     async findAll() {
-        return this.schoolsRepository.find({});
+        return this.schoolsRepository.find({
+            relations: ['students'],
+        });
     }
 
     async findOne(id: string) {
         const school = await this.schoolsRepository.findOne({
             where: { id },
+            relations: ['students'],
         });
 
         if (!school) throw new NotFoundException(`School ID ${id} not found`);

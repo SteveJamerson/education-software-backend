@@ -1,4 +1,5 @@
 import { School } from '@/schools/entities/school.entity';
+import { validateCPF } from '@/utils/functions/validations';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { StudentCreateDTO } from './dto/studentCreate.dto';
@@ -32,6 +33,11 @@ export class StudentsService {
     }
 
     async create(studentData: StudentCreateDTO) {
+        if (!validateCPF(studentData.cpf))
+            throw new NotFoundException(
+                `Student CPF ${studentData.cpf} invalid`,
+            );
+
         const schools = await Promise.all(
             studentData.schools.map((id) => this.preloadSchoolById(id)),
         );
@@ -44,6 +50,11 @@ export class StudentsService {
     }
 
     async update(id: string, studentData: StudentUpdateDTO) {
+        if (!validateCPF(studentData.cpf))
+            throw new NotFoundException(
+                `Student CPF ${studentData.cpf} invalid`,
+            );
+
         const schools =
             studentData.schools &&
             (await Promise.all(

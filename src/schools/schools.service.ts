@@ -1,3 +1,4 @@
+import { validateCNPJ } from '@/utils/functions/validations';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { SchoolCreateDTO } from './dto/schoolCreate.dto';
@@ -29,11 +30,21 @@ export class SchoolsService {
     }
 
     async create(schoolData: SchoolCreateDTO) {
+        if (!validateCNPJ(schoolData.cnpj))
+            throw new NotFoundException(
+                `School CNPJ ${schoolData.cnpj} invalid`,
+            );
+
         const school = this.schoolsRepository.create(schoolData);
         return this.schoolsRepository.save(school);
     }
 
     async update(id: string, schoolData: SchoolUpdateDTO) {
+        if (!validateCNPJ(schoolData.cnpj))
+            throw new NotFoundException(
+                `School CNPJ ${schoolData.cnpj} invalid`,
+            );
+
         const school = await this.schoolsRepository.preload({
             id,
             ...schoolData,

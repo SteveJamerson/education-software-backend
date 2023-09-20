@@ -21,6 +21,12 @@ export class School {
     })
     name: string;
 
+    @Column({
+        unique: true,
+        length: 14,
+    })
+    cnpj: string;
+
     @Column()
     categorie: string;
 

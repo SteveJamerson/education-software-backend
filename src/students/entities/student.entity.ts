@@ -18,6 +18,12 @@ export class Student {
     @Column()
     name: string;
 
+    @Column({
+        unique: true,
+        length: 11,
+    })
+    cpf: string;
+
     @ManyToMany(() => School, (school) => school.students)
     schools: School[];
 

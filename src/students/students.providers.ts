@@ -1,4 +1,5 @@
 import { Challenge } from '@/challenges/entities/challenge.entity';
+import { Project } from '@/projects/entities/project.entity';
 import { School } from '@/schools/entities/school.entity';
 import { Student } from '@/students/entities/student.entity';
 import { Task } from '@/tasks/entities/task.entity';
@@ -23,9 +24,15 @@ export const studentsProviders = [
         inject: ['DATA_SOURCE'],
     },
     {
-        provide: 'CHALLENGE_REPOSITORY',
+        provide: 'CHALLENGES_REPOSITORY',
         useFactory: (dataSource: DataSource) =>
             dataSource.getRepository(Challenge),
+        inject: ['DATA_SOURCE'],
+    },
+    {
+        provide: 'PROJECTS_REPOSITORY',
+        useFactory: (dataSource: DataSource) =>
+            dataSource.getRepository(Project),
         inject: ['DATA_SOURCE'],
     },
 ];
